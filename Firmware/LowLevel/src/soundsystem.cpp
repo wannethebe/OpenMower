@@ -15,6 +15,7 @@
 //
 
 #include <soundsystem.h>
+#include <NeoPixelConnect.h>
 
 
 SerialPIO soundSerial(PIN_SOUND_TX, PIN_SOUND_RX, 250);
@@ -45,7 +46,7 @@ bool MP3Sound::begin()
     // init soundmodule
     sound_available = myMP3.begin(soundSerial,true);    
     this->anzSoundfiles = myMP3.numSdTracks();
-    return this->anzSoundfiles > 0;
+    return this->anzSoundfiles > 0;   
 }
 
 
@@ -65,7 +66,11 @@ void MP3Sound::playSoundAdHoc(int soundNr)
 {
     if(soundNr > anzSoundfiles) return;
 
-    myMP3.play(soundNr);    
+    myMP3.play(soundNr); 
+    #ifdef WT901
+    delay(300);
+    NeoPixelConnect p(PIN_NEOPIXEL, 1, pio1, 0);
+    #endif
 }
 
 

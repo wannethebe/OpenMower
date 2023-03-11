@@ -431,6 +431,7 @@ void setup()
 
   if (!init_imu())
   {
+
 #ifdef USB_DEBUG
     DEBUG_SERIAL.println("IMU initialization unsuccessful");
     DEBUG_SERIAL.println("Check IMU wiring or try cycling power");
@@ -466,7 +467,7 @@ void setup()
 
 #ifdef ENABLE_SOUND_MODULE
   p.neoPixelSetValue(0, 0, 255, 255, true);
-
+  delay(1000);
   sound_available = my_sound.begin();
   if (sound_available)
   {
@@ -474,15 +475,19 @@ void setup()
     my_sound.setvolume(100);
     my_sound.playSoundAdHoc(1);
     p.neoPixelSetValue(0, 255, 255, 0, true);
+    delay(1000);
   }
   else
   {
-    for (uint8_t b = 0; b < 3; b++)
+    #ifdef WT901
+    NeoPixelConnect p(PIN_NEOPIXEL, 1, pio1, 0);
+    #endif
+    for (uint8_t b = 0; b < 5; b++)
     {
       p.neoPixelSetValue(0, 0, 0, 0, true);
-      delay(200);
+      delay(500);
       p.neoPixelSetValue(0, 0, 0, 255, true);
-      delay(200);
+      delay(500);
     }
   }
 
