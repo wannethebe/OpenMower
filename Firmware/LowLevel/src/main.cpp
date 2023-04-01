@@ -31,7 +31,7 @@
 #define STATUS_CYCLETIME 100      // cycletime for refresh analog and digital Statusvalues
 #define UI_SET_LED_CYCLETIME 1000 // cycletime for refresh UI status LEDs
 
-#define LIFT_EMERGENCY_MILLIS 500  // Time for wheels to be lifted in order to count as emergency. This is to filter uneven ground.
+#define LIFT_EMERGENCY_MILLIS 200  // Time for wheels to be lifted in order to count as emergency. This is to filter uneven ground.
 #define BUTTON_EMERGENCY_MILLIS 20 // Time for button emergency to activate. This is to debounce the button if triggered on bumpy surfaces
 
 // Define to stream debugging messages via USB
@@ -141,7 +141,7 @@ void updateEmergency()
   
   uint8_t emergency_state = 0;
 
-  bool is_lifted = emergency1 || emergency2;
+  bool is_lifted = emergency1 && emergency2;
   bool stop_pressed = emergency3 || emergency4;
 
   if (is_lifted)
